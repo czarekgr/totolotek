@@ -6,6 +6,7 @@ import random
 import os
 
 kupon = []
+
 def losuj(ile=6, do=49):
     wynik = set([])
     for i in range(1, ile + 1):
@@ -34,6 +35,8 @@ def obstaw(ile=6, do=49):
     return (obstawione)
 
 i= int(input("ile zakładów?:"))
+ilosc_losowan=int(input("ile losowań?:"))
+
 for z in range(i):
     print("zakład nr:",z+1)
     print(12*"-")
@@ -45,7 +48,7 @@ for z in range(i):
 
 wyniki = {3:0,4:0,5:0,6:0}
 
-for i in range(1000000):
+for i in range(ilosc_losowan):
     los = losuj()
     for zaklad in kupon:
         wynik = len(zaklad & los)
