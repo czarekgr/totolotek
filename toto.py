@@ -58,4 +58,8 @@ for i in range(ilosc_losowan):
         if wynik > 4:  # jak się trafi 5 lub 6 to wypisze ten fakt
             print(wynik, "w", i, "losowaniu")
 
-print(wyniki)
+
+print("\n\nNa",ilosc_losowan,"losowań trafiłeś:")
+for i in range(3,7):
+    print(i,":  ",wyniki[i])
+
