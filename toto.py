@@ -9,7 +9,7 @@ kupon = []
 
 
 def losuj(ile=6, do=49):  # losowanie zbioru różnych liczb (domyślnie 6 liczb z zakresu 1..49)
-    wynik = set([])
+    wynik = set()
     for i in range(ile):
         while 1:
             liczba = ord(os.urandom(1)) >> 2 # Przesuniecie bitowe dla przyspieszenia jak losują się duże liczby
@@ -19,7 +19,7 @@ def losuj(ile=6, do=49):  # losowanie zbioru różnych liczb (domyślnie 6 liczb
     return (wynik)
 
 def obstaw(ile=6, do=49):  # wypełnienie zakładu (kratki na kuponie)
-    obstawione = set([])
+    obstawione = set()
     for i in range(1, ile + 1):
         while 1:
             try:
