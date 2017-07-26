@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'czarek'
 
+# origin https://github.com/czarekgr/totolotek.git
+
+
 import random
 import os  # Do losowania, uwaga typowo uniksowe, w windzie może być inaczej
 
