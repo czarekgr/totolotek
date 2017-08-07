@@ -25,14 +25,14 @@ class Zaklad(Frame):
     """Pojedynczy zakład (kratka 7x7"""
 
     def __init__(self, master, ile=6, do=49):
-        super().__init__(master, borderwidth=1)
+        super().__init__(master, bd=4, bg='green')
         self.z = []
         self.do = do
         self.ile = ile
         for liczba in range(0, do):
             c = liczba // 7
             r = liczba % 7
-            self.z.append(Dyscyplina(self, text=str(liczba + 1), borderwidth=1, height=1, width=1))
+            self.z.append(Dyscyplina(self, text=str(liczba + 1), borderwidth=1,padx=5,pady=2, height=1, width=1))
             self.z[liczba].grid(row=r, column=c)
             self.z[liczba]["command"] = lambda x=liczba: self.dupka(x)
             self.pack()
@@ -57,7 +57,7 @@ class Kupon(Frame):
         super().__init__(master)
         self.k = []
 
-        for liczba in range(5):
+        for liczba in range(7):
             self.k.append(Zaklad(self).pack(side='left'))
 
         self.pack()
