@@ -3,6 +3,7 @@
 __author__ = 'czarek'
 
 from tkinter import *
+#from tkinter.ttk import *
 
 print(TkVersion)
 
@@ -32,7 +33,7 @@ class Zaklad(Frame):
         for liczba in range(0, do):
             c = liczba // 7
             r = liczba % 7
-            self.z.append(Dyscyplina(self, text=str(liczba + 1), borderwidth=1,padx=5,pady=2, height=1, width=1))
+            self.z.append(Dyscyplina(self, text=str(liczba + 1), borderwidth=1, padx=5, pady=2, height=1, width=1))
             self.z[liczba].grid(row=r, column=c)
             self.z[liczba]["command"] = lambda x=liczba: self.dupka(x)
             self.pack()
@@ -56,11 +57,18 @@ class Kupon(Frame):
     def __init__(self, master):
         super().__init__(master)
         self.k = []
-
-        for liczba in range(7):
-            self.k.append(Zaklad(self).pack(side='left'))
-
+        self.ramka_gora = Frame(self)
+        self.ramka_gora.grid(row=0, column=0)
+        self.ramka_dol = Frame(self)
+ #       self.sep = Separator(self)
+        self.ramka_dol.grid(row=1, column=0, pady=50)
         self.pack()
+        for liczba in range(3):
+            self.k.append(Zaklad(self.ramka_gora).pack(side='left'))
+        p = Button(self.ramka_dol, text ="Przykładowy przycisk").pack(side='bottom')
+
+     #   self.pack()
+
 
 
 okno = Tk()
