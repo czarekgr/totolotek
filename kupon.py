@@ -60,12 +60,22 @@ class Kupon(Frame):
         self.ramka_gora = Frame(self)
         self.ramka_gora.grid(row=0, column=0)
         self.ramka_dol = Frame(self)
- #       self.sep = Separator(self)
         self.ramka_dol.grid(row=1, column=0, pady=50)
+        self.etykieta1=Label(self.ramka_dol, text="Na ile losowań?").grid(row=0, column=0)
+        self.ilosc_los = Entry(self.ramka_dol).grid(row=0, column=1,sticky=S,pady=10)
+    #    self.etykieta1=Label(self.ramka_dol, text="Trafiłeś").grid(row=3, column=0, sticky=E, pady=5)
+        self.etykieta2=Label(self.ramka_dol, text="Szóstek:").grid(row=1, column=1, sticky=E, pady=5)
+        self.etykieta3=Label(self.ramka_dol, text="Piątek:").grid(row=2, column=1, sticky=E, pady=5)
+        self.etykieta4=Label(self.ramka_dol, text="Czwórek:").grid(row=3, column=1, sticky=E, pady=5)
+        self.etykieta5 = Label(self.ramka_dol, text="Trójek:").grid(row=4, column=1, sticky=E, pady=5)
+        self.wynik6 = Label(self.ramka_dol, text="0").grid(row=1,column=2)
+        self.wynik5 = Label(self.ramka_dol, text="0").grid(row=2, column=2)
+        self.wynik4 = Label(self.ramka_dol, text="0").grid(row=3, column=2)
+        self.wynik3 = Label(self.ramka_dol, text="0").grid(row=4, column=2)
         self.pack()
-        for liczba in range(3):
+        for liczba in range(5):
             self.k.append(Zaklad(self.ramka_gora).pack(side='left'))
-        p = Button(self.ramka_dol, text ="Przykładowy przycisk").pack(side='bottom')
+        p = Button(self.ramka_dol, text ="Start").grid(row=6, column=0)
 
      #   self.pack()
 
