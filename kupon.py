@@ -12,21 +12,23 @@ class Dyscyplina(Button):
     """Pojedyncza kratka z liczbą"""
     aktywny = 0
     ilosc = 0
-
+    kolor_aktywny = "red"
+    kolor_nieaktywny="gray85" \
+                     ""
     def zmien_aktywnosc(self, zezwolenie):
         if (self.aktywny == 0 and zezwolenie):
             self.aktywny = 1
-            self.configure(bg="green")
+            self.configure(bg=self.kolor_aktywny,activebackground=self.kolor_aktywny)
         else:
             self.aktywny = 0
-            self.configure(bg="gray85")
+            self.configure(bg=self.kolor_nieaktywny,activebackground=self.kolor_nieaktywny)
 
 
 class Zaklad(Frame):
     """Pojedynczy zakład (kratka 7x7"""
 
     def __init__(self, master, ile=6, do=49):
-        super().__init__(master, bd=4, bg='green')
+        super().__init__(master, bd=4, bg='red')
         self.z = []
         self.do = do
         self.ile = ile
