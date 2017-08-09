@@ -1,29 +1,17 @@
-import tkinter as tk
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+__author__ = 'czarek'
 
-class Application(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.pack(side='right')
-        self.create_widgets()
+# origin https://github.com/czarekgr/totolotek.git
 
-    def create_widgets(self):
-        self.hi_there = tk.Button(self)
-        self.hi_there["text"] = "Hello World\n(click me)"
 
-        self.hi_there["command"] = self.say_hi
-        self.hi_there.pack(side="top")
+class Dupa:
+    def __init__(self,k):
+        self.k= k
 
-        self.quit = tk.Button(self, text="QUIT", fg="red",
-                              command=root.destroy)
-        self.quit.pack(side="bottom")
 
-    def say_hi(self):
-        print("hi there, everyone!")
+kutas = []
+for a in range(10):
+    kutas.append(Dupa(a))
 
-root = tk.Tk()
-app = Application(master=root)
-app=Application(master=root)
-
-app=Application(master=root)
-app.mainloop()
-
+print(kutas[3].k)
