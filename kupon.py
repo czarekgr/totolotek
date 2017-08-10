@@ -7,16 +7,12 @@ from tkinter import *
 
 # from tkinter.ttk import *
 
-
-
-
 class Dyscyplina(Button):
     """Pojedyncza kratka z liczbą"""
     aktywny = 0
     ilosc = 0
     kolor_aktywny = "red"
-    kolor_nieaktywny = "gray85" \
-                       ""
+    kolor_nieaktywny = "gray85"
 
     def zmien_aktywnosc(self, zezwolenie):
         if (self.aktywny == 0 and zezwolenie):
@@ -43,11 +39,8 @@ class Zaklad(Frame):
             self.z[liczba]["command"] = lambda x=liczba: self.dupka(x)
 
     def dupka(self, k):
-        # print("dupa", k + 1)
         i = self.ile_obstawionych()
-        # print("obstaw ", i)
         self.z[k].zmien_aktywnosc(i < self.ile)
-        print(self.get_obstawione())
 
     def ile_obstawionych(self):
         ile = 0
@@ -76,7 +69,6 @@ class Kupon(Frame):
         self.ramka_dol.grid(row=1, column=0, pady=50)
         self.etykieta1 = Label(self.ramka_dol, text="Na ile losowań?").grid(row=0, column=0)
         self.ilosc_los = Entry(self.ramka_dol).grid(row=0, column=1, sticky=S, pady=10)
-        #    self.etykieta1=Label(self.ramka_dol, text="Trafiłeś").grid(row=3, column=0, sticky=E, pady=5)
         self.etykieta2 = Label(self.ramka_dol, text="Szóstek:").grid(row=1, column=1, sticky=E, pady=5)
         self.etykieta3 = Label(self.ramka_dol, text="Piątek:").grid(row=2, column=1, sticky=E, pady=5)
         self.etykieta4 = Label(self.ramka_dol, text="Czwórek:").grid(row=3, column=1, sticky=E, pady=5)
@@ -86,24 +78,21 @@ class Kupon(Frame):
         self.wynik4 = Label(self.ramka_dol, text="0").grid(row=3, column=2)
         self.wynik3 = Label(self.ramka_dol, text="0").grid(row=4, column=2)
         self.pack()
+
         for liczba in range(self.ilosc_zakladow):
-            print("gawno", liczba)
-            self.k.append(Zaklad(self.ramka_gora).grid(row=0, column=liczba))
+            self.k.append(Zaklad(self.ramka_gora))
+            self.k[liczba].grid(row=0, column=liczba)
 
-        self.p = Button(self.ramka_dol, text="Start",command=self.przycisk).grid(row=6, column=0)
+        self.p = Button(self.ramka_dol, text="Start", command=self.przycisk).grid(row=6, column=0)
 
-        self.ob = []
-    #@staticmethod
-    #@property
-    def g_obstawione(self):
-        ob = []
-        for zaklad in self.k:
-            x =  zaklad.ile_obstawionych()
-            print (x)
-        return(ob)
+    def get_obstawione(self):
+        obstawione = []
+        for self.zaklad in self.k:
+            obstawione.append(self.zaklad.get_obstawione())
+        return (obstawione)
 
-    def przycisk(self):
-        print(self.g_obstawione)
+    def przycisk(self):  # tu będzie start obliczeń
+        print(self.get_obstawione())
 
 
 okno = Tk()
