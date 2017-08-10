@@ -21,7 +21,13 @@ class Dyscyplina(Button):
         else:
             self.aktywny = 0
             self.configure(bg=self.kolor_nieaktywny, activebackground=self.kolor_nieaktywny)
+    def zeruj_aktywnosc(self):
+        self.aktywny = 0
+        self.configure(bg=self.kolor_nieaktywny, activebackground=self.kolor_nieaktywny)
 
+    def ustaw_aktywnosc(self):
+        self.aktywny = 1
+        self.configure(bg=self.kolor_aktywny, activebackground=self.kolor_aktywny)
 
 class Zaklad(Frame):
     """Pojedynczy zakład (kratka 7x7"""
@@ -36,9 +42,9 @@ class Zaklad(Frame):
             r = liczba % 7
             self.z.append(Dyscyplina(self, text=str(liczba + 1), borderwidth=1, padx=5, pady=2, height=1, width=1))
             self.z[liczba].grid(row=r, column=c)
-            self.z[liczba]["command"] = lambda x=liczba: self.dupka(x)
+            self.z[liczba]["command"] = lambda x=liczba: self.zaznacz(x)
 
-    def dupka(self, k):
+    def zaznacz(self, k):
         i = self.ile_obstawionych()
         self.z[k].zmien_aktywnosc(i < self.ile)
 
@@ -54,6 +60,13 @@ class Zaklad(Frame):
             if self.z[i].aktywny == 1:
                 obstawione.append(i + 1)
         return obstawione
+
+    def obstaw(self,liczby):
+        for i in range(0,self.do):
+            self.z[i].zeruj_aktywnosc()
+        for i in range(0,self.do):
+            if i in liczby:
+                self.z[i].ustaw_aktywnosc()
 
 
 class Kupon(Frame):
@@ -83,7 +96,10 @@ class Kupon(Frame):
             self.k.append(Zaklad(self.ramka_gora))
             self.k[liczba].grid(row=0, column=liczba)
 
-        self.p = Button(self.ramka_dol, text="Start", command=self.przycisk).grid(row=6, column=0)
+
+        Button(self.ramka_dol, text="Start", command=self.start).grid(row=6, column=0)
+        Button(self.ramka_dol, text="Obstaw losowo", command=self.obstaw_los).grid(row=6, column=1)
+
 
     def get_obstawione(self):
         obstawione = []
@@ -91,9 +107,13 @@ class Kupon(Frame):
             obstawione.append(self.zaklad.get_obstawione())
         return (obstawione)
 
-    def przycisk(self):  # tu będzie start obliczeń
+    def start(self):  # tu będzie start obliczeń
         print(self.get_obstawione())
 
+    def obstaw_los(self):
+        pass
+        for self.zaklad in self.k:
+            self.zaklad.obstaw([1,22,34,45,17,13])     #tu bedzie losowanie
 
 okno = Tk()
 okno.title("Kupon totolotka")
