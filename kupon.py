@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'czarek'
 
+import random
+import os
+
 from tkinter import *
 
 
@@ -113,7 +116,20 @@ class Kupon(Frame):
     def obstaw_los(self):
         pass
         for self.zaklad in self.k:
-            self.zaklad.obstaw([1,22,34,45,17,13])     #tu bedzie losowanie
+            self.zaklad.obstaw(self.losuj())     #tu bedzie losowanie
+
+    def losuj(self,ile=6, do=49):  # losowanie zbioru różnych liczb (domyślnie 6 liczb z zakresu 1..49)
+        wynik = set()
+        for i in range(ile):
+            while 1:
+                liczba = ord(os.urandom(1)) >> 2 # Przesuniecie bitowe dla przyspieszenia jak losują się duże liczby
+                if liczba not in wynik and liczba > 0 and liczba <= do:
+                    wynik.add(liczba)
+                    break
+        return (wynik)
+
+
+
 
 okno = Tk()
 okno.title("Kupon totolotka")
