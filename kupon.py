@@ -4,7 +4,7 @@ __author__ = 'czarek'
 
 import random
 import os
-
+from tkinter.ttk import Progressbar
 from tkinter import *
 
 
@@ -81,8 +81,21 @@ class Kupon(Frame):
         self.k = []
         self.ramka_gora = Frame(self)
         self.ramka_gora.grid(row=0, column=0)
+
+
+        self.ramka_srodek = Frame(self)
+        self.ramka_srodek.grid(row=1, column=0)
+
+        self.pasek_postepu = Progressbar(self.ramka_srodek,orient=HORIZONTAL,mode='determinate')
+        self.pasek_postepu['value']=0
+        self.pasek_postepu.pack(fill=X)
+        self.pasek_postepu.start(45)
+
+
+
+
         self.ramka_dol = Frame(self)
-        self.ramka_dol.grid(row=1, column=0, pady=50)
+        self.ramka_dol.grid(row=2, column=0, pady=50)
         self.etykieta1 = Label(self.ramka_dol, text="Na ile losowań?").grid(row=0, column=0)
         self.ilosc_los = Entry(self.ramka_dol )
         self.ilosc_los.grid(row=0, column=1, sticky=S, pady=10)
@@ -92,13 +105,13 @@ class Kupon(Frame):
         self.etykieta4 = Label(self.ramka_dol, text="Czwórek:").grid(row=3, column=1, sticky=E, pady=5)
         self.etykieta5 = Label(self.ramka_dol, text="Trójek:").grid(row=4, column=1, sticky=E, pady=5)
         self.wynik6 = Label(self.ramka_dol, text ="0")
-        self.wynik6.grid(row=1, column=2)
+        self.wynik6.grid(row=1, column=2, sticky=W)
         self.wynik5 = Label(self.ramka_dol, text="0")
-        self.wynik5.grid(row=2, column=2)
+        self.wynik5.grid(row=2, column=2, sticky=W)
         self.wynik4 = Label(self.ramka_dol, text="0")
-        self.wynik4.grid(row=3, column=2)
+        self.wynik4.grid(row=3, column=2, sticky=W)
         self.wynik3 = Label(self.ramka_dol, text="0")
-        self.wynik3.grid(row=4, column=2)
+        self.wynik3.grid(row=4, column=2,sticky=W)
         self.pack()
 
         for liczba in range(self.ilosc_zakladow):
@@ -118,9 +131,7 @@ class Kupon(Frame):
 
     def start(self):  # tu będzie start obliczeń
         kupon=self.get_obstawione()
-        print(kupon)
         ilosc_losowan=int(self.ilosc_los.get())
-        print(ilosc_losowan)
         wyniki = {3: 0, 4: 0, 5: 0, 6: 0}
 
         for i in range(ilosc_losowan):
@@ -129,8 +140,6 @@ class Kupon(Frame):
                 wynik = len(zaklad & los)
                 if wynik > 2:
                     wyniki[wynik] += 1
-                if wynik > 4:  # jak się trafi 5 lub 6 to wypisze ten fakt
-                    print(wynik, "w", i, "losowaniu")
 
         print("\n\nNa",ilosc_losowan,"losowań trafiłeś:")
         for i in range(3,7):
