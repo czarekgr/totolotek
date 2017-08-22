@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'czarek'
 
-import random
 import os
 from tkinter.ttk import Progressbar
 from tkinter import *
@@ -24,6 +23,7 @@ class Dyscyplina(Button):
         else:
             self.aktywny = 0
             self.configure(bg=self.kolor_nieaktywny, activebackground=self.kolor_nieaktywny)
+
     def zeruj_aktywnosc(self):
         self.aktywny = 0
         self.configure(bg=self.kolor_nieaktywny, activebackground=self.kolor_nieaktywny)
@@ -31,6 +31,7 @@ class Dyscyplina(Button):
     def ustaw_aktywnosc(self):
         self.aktywny = 1
         self.configure(bg=self.kolor_aktywny, activebackground=self.kolor_aktywny)
+
 
 class Zaklad(Frame):
     """Pojedynczy zakład (kratka 7x7"""
@@ -64,10 +65,10 @@ class Zaklad(Frame):
                 obstawione.add(i + 1)
         return obstawione
 
-    def obstaw(self,liczby):
-        for i in range(0,self.do):
+    def obstaw(self, liczby):
+        for i in range(0, self.do):
             self.z[i].zeruj_aktywnosc()
-        for i in range(0,self.do):
+        for i in range(0, self.do):
             if i in liczby:
                 self.z[i].ustaw_aktywnosc()
 
@@ -82,46 +83,39 @@ class Kupon(Frame):
         self.ramka_gora = Frame(self)
         self.ramka_gora.grid(row=0, column=0)
 
-
         self.ramka_srodek = Frame(self)
         self.ramka_srodek.grid(row=1, column=0)
 
-        self.pasek_postepu = Progressbar(self.ramka_srodek,orient=HORIZONTAL,mode='determinate')
-        self.pasek_postepu['value']=0
+        self.pasek_postepu = Progressbar(self.ramka_srodek, orient=HORIZONTAL, mode='determinate')
+        self.pasek_postepu['value'] = 0
         self.pasek_postepu.pack(fill=X)
-        self.pasek_postepu.start(45)
-
-
-
 
         self.ramka_dol = Frame(self)
         self.ramka_dol.grid(row=2, column=0, pady=50)
         self.etykieta1 = Label(self.ramka_dol, text="Na ile losowań?").grid(row=0, column=0)
-        self.ilosc_los = Entry(self.ramka_dol )
+        self.ilosc_los = Entry(self.ramka_dol)
         self.ilosc_los.grid(row=0, column=1, sticky=S, pady=10)
-        self.ilosc_los.insert(8,"1000")
+        self.ilosc_los.insert(8, "1000")
         self.etykieta2 = Label(self.ramka_dol, text="Szóstek:").grid(row=1, column=1, sticky=E, pady=5)
         self.etykieta3 = Label(self.ramka_dol, text="Piątek:").grid(row=2, column=1, sticky=E, pady=5)
         self.etykieta4 = Label(self.ramka_dol, text="Czwórek:").grid(row=3, column=1, sticky=E, pady=5)
         self.etykieta5 = Label(self.ramka_dol, text="Trójek:").grid(row=4, column=1, sticky=E, pady=5)
-        self.wynik6 = Label(self.ramka_dol, text ="0")
+        self.wynik6 = Label(self.ramka_dol, text="0")
         self.wynik6.grid(row=1, column=2, sticky=W)
         self.wynik5 = Label(self.ramka_dol, text="0")
         self.wynik5.grid(row=2, column=2, sticky=W)
         self.wynik4 = Label(self.ramka_dol, text="0")
         self.wynik4.grid(row=3, column=2, sticky=W)
         self.wynik3 = Label(self.ramka_dol, text="0")
-        self.wynik3.grid(row=4, column=2,sticky=W)
+        self.wynik3.grid(row=4, column=2, sticky=W)
         self.pack()
 
         for liczba in range(self.ilosc_zakladow):
             self.k.append(Zaklad(self.ramka_gora))
             self.k[liczba].grid(row=0, column=liczba)
 
-
         Button(self.ramka_dol, text="Start", command=self.start).grid(row=6, column=0)
         Button(self.ramka_dol, text="Obstaw losowo", command=self.obstaw_los).grid(row=6, column=1)
-
 
     def get_obstawione(self):
         obstawione = []
@@ -130,49 +124,52 @@ class Kupon(Frame):
         return (obstawione)
 
     def start(self):  # tu będzie start obliczeń
-        kupon=self.get_obstawione()
-        ilosc_losowan=int(self.ilosc_los.get())
+        kupon = self.get_obstawione()
+        ilosc_losowan = int(self.ilosc_los.get())
         wyniki = {3: 0, 4: 0, 5: 0, 6: 0}
+        dzielnik = ilosc_losowan // 1000 + 1
 
+        self.pasek_postepu.start()
         for i in range(ilosc_losowan):
             los = self.losuj()
+            self.pasek_postepu['maximum'] = ilosc_losowan
             for zaklad in kupon:
+                if i % dzielnik == 0:
+                    self.pasek_postepu.update()
+                    self.pasek_postepu['value'] = i
                 wynik = len(zaklad & los)
                 if wynik > 2:
                     wyniki[wynik] += 1
 
-        print("\n\nNa",ilosc_losowan,"losowań trafiłeś:")
-        for i in range(3,7):
-            print(i,":  ",wyniki[i])
+        self.pasek_postepu.stop()
+        self.pasek_postepu.stop()
+        print("\n\nNa", ilosc_losowan, "losowań trafiłeś:")
+        for i in range(3, 7):
+            print(i, ":  ", wyniki[i])
 
-
-            if i ==3:
+            if i == 3:
                 self.wynik3.config(text=str(wyniki[3]))
-            if i ==4:
+            if i == 4:
                 self.wynik4.config(text=str(wyniki[4]))
-            if i ==5:
+            if i == 5:
                 self.wynik5.config(text=str(wyniki[5]))
-            if i ==6:
+            if i == 6:
                 self.wynik6.config(text=str(wyniki[6]))
-
-
 
     def obstaw_los(self):
         pass
         for self.zaklad in self.k:
             self.zaklad.obstaw(self.losuj())
 
-    def losuj(self,ile=6, do=49):  # losowanie zbioru różnych liczb (domyślnie 6 liczb z zakresu 1..49)
+    def losuj(self, ile=6, do=49):  # losowanie zbioru różnych liczb (domyślnie 6 liczb z zakresu 1..49)
         wynik = set()
         for i in range(ile):
             while 1:
-                liczba = ord(os.urandom(1)) >> 2 # Przesuniecie bitowe dla przyspieszenia jak losują się duże liczby
+                liczba = ord(os.urandom(1)) >> 2  # Przesuniecie bitowe dla przyspieszenia jak losują się duże liczby
                 if liczba not in wynik and liczba > 0 and liczba <= do:
                     wynik.add(liczba)
                     break
         return (wynik)
-
-
 
 
 okno = Tk()
