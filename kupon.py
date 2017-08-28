@@ -86,7 +86,7 @@ class Kupon(Frame):
         self.ramka_srodek = Frame(self)
         self.ramka_srodek.grid(row=1, column=0)
 
-        self.pasek_postepu = Progressbar(self.ramka_srodek, orient=HORIZONTAL, mode='determinate')
+        self.pasek_postepu = Progressbar(self.ramka_srodek, orient=HORIZONTAL,length=400, mode='determinate')
         self.pasek_postepu['value'] = 0
         self.pasek_postepu.pack(fill=X)
 
@@ -127,7 +127,7 @@ class Kupon(Frame):
         kupon = self.get_obstawione()
         ilosc_losowan = int(self.ilosc_los.get())
         wyniki = {3: 0, 4: 0, 5: 0, 6: 0}
-        dzielnik = ilosc_losowan // 200 + 1
+        dzielnik = ilosc_losowan // 400 + 1
 
         self.pasek_postepu.start()
         for i in range(ilosc_losowan):
