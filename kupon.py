@@ -127,14 +127,14 @@ class Kupon(Frame):
         kupon = self.get_obstawione()
         ilosc_losowan = int(self.ilosc_los.get())
         wyniki = {3: 0, 4: 0, 5: 0, 6: 0}
-        dzielnik = ilosc_losowan // 1000 + 1
+        dzielnik = ilosc_losowan // 200 + 1
 
         self.pasek_postepu.start()
         for i in range(ilosc_losowan):
             los = self.losuj()
             self.pasek_postepu['maximum'] = ilosc_losowan
             for zaklad in kupon:
-                if i % dzielnik == 0:
+                if not i % dzielnik:
                     self.pasek_postepu.update()
                     self.pasek_postepu['value'] = i
                 wynik = len(zaklad & los)
